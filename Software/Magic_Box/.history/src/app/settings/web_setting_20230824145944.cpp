@@ -236,7 +236,7 @@ void HomePage()
 {
     // 指定 target='_blank' 设置新建页面
     webpage = F("<h4>恭喜你完成了Magic Box的制作，赶快设置你的Magic Box吧</h4>");
-    webpage += F("<a href='https://github.com/ye-zhang0720/MagicBox.git' target='_blank'><button>Github</button></a>");
+    webpage += F("<a href='https://github.com/ClimbSnail/MagicBox_AIO' target='_blank'><button>Github</button></a>");
     webpage += F("<a href='https://space.bilibili.com/344470052?spm_id_from=333.788.b_765f7570696e666f.1' target='_blank'><button>BiliBili教程</button></a>");
     Send_HTML(webpage);
 }
