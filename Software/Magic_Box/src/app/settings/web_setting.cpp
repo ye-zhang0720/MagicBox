@@ -179,7 +179,7 @@ void init_page_header()
     webpage_header += F("</style></head><body>");
 
     webpage_header += F("<h1>MagicBox_AIO ");
-    webpage_header += F(AIO_VERSION "</h1>");
+    webpage_header += F(SOFTWARE_VERSION "</h1>");
     webpage_header += F("<ul>");
     webpage_header += F("<li><a href='/'>Home</a></li>"); // Lower Menu bar command entries
     webpage_header += F("<li><a href='/download'>Download</a></li>");

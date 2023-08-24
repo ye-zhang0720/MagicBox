@@ -32,8 +32,8 @@ static lv_style_t font_22;
 lv_coord_t up_speed_max = 0;
 lv_coord_t down_speed_max = 0;
 
-lv_coord_t upload_serise[10] = {0};
-lv_coord_t download_serise[10] = {0};
+lv_coord_t upload_serise[20] = {0};
+lv_coord_t download_serise[20] = {0};
 
 void updateNetworkInfoLabel(double up_speed, double down_speed)
 {
@@ -90,6 +90,8 @@ void updateNetworkInfoLabel(double up_speed, double down_speed)
         lv_label_set_text_fmt(down_speed_label, "%.1f", down_speed);
         lv_label_set_text(down_speed_unit_label, "M/s");
     }
+    lv_obj_align_to(up_speed_label, up_speed_unit_label, LV_ALIGN_OUT_LEFT_BOTTOM, -3, 0);
+    lv_obj_align_to(down_speed_label, down_speed_unit_label, LV_ALIGN_OUT_LEFT_BOTTOM, -3, 0);
 }
 
 lv_coord_t max(lv_coord_t a, lv_coord_t b)
@@ -126,7 +128,7 @@ void updateTempareture(double temp_value)
 lv_coord_t updateNetSeries(lv_coord_t *series, double speed)
 {
     lv_coord_t local_max = series[0];
-    for (int index = 0; index < 9; index++)
+    for (int index = 0; index < 19; index++)
     {
         series[index] = series[index + 1];
         if (local_max < series[index])
@@ -134,9 +136,9 @@ lv_coord_t updateNetSeries(lv_coord_t *series, double speed)
             local_max = series[index];
         }
     }
-    series[9] = (lv_coord_t)speed;
-    if (local_max < series[9])
-        local_max = series[9];
+    series[19] = (lv_coord_t)speed;
+    if (local_max < series[19])
+        local_max = series[19];
 
     // Serial.print(speed);
     // Serial.print("->");
@@ -158,7 +160,6 @@ void updateChartRange()
     max_speed = max(max_speed, (lv_coord_t)16);
     lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, 0, (lv_coord_t)(max_speed * 1.1));
 }
-
 
 void updateData(double up_speed, double down_speed, double cpu_usage, double mem_usage, double temp_value)
 {
@@ -247,42 +248,41 @@ void display_routor()
     upload_label = lv_label_create(cont);
     lv_obj_set_style_text_color(upload_label, lv_palette_main(LV_PALETTE_RED), LV_STATE_DEFAULT);
     lv_label_set_text(upload_label, LV_SYMBOL_UPLOAD);
-    lv_obj_align(upload_label, LV_ALIGN_TOP_LEFT, -5, 0);
+    lv_obj_align(upload_label, LV_ALIGN_TOP_LEFT, -5, -5);
 
-    // Upload & Download Speed Display
-    up_speed_label = lv_label_create(cont);
-    lv_label_set_text(up_speed_label, "0");
-    lv_obj_set_style_text_color(up_speed_label, lv_color_white(), LV_STATE_DEFAULT);
-    lv_obj_add_style(up_speed_label, &font_22, 0);
-    // lv_obj_align_to(up_speed_label, up_speed_unit_label, LV_ALIGN_OUT_LEFT_MID, -3, 0);
-    lv_obj_align_to(up_speed_label, upload_label, LV_ALIGN_OUT_RIGHT_MID, 3, 0);
+    down_label = lv_label_create(cont);
+    lv_obj_set_style_text_color(down_label, lv_palette_main(LV_PALETTE_GREEN), LV_STATE_DEFAULT);
+    lv_label_set_text(down_label, LV_SYMBOL_DOWNLOAD);
+    lv_obj_align(down_label, LV_ALIGN_TOP_MID, 8, -5);
 
     up_speed_unit_label = lv_label_create(cont);
     lv_label_set_text(up_speed_unit_label, "K/S");
     lv_obj_set_style_text_color(up_speed_unit_label, lv_color_hex(0x838a99), LV_STATE_DEFAULT);
     // lv_obj_add_style(up_speed_unit_label, &font_22, 0);
     // lv_obj_align(up_speed_unit_label, LV_ALIGN_TOP_MID, -18, 0);
-    lv_obj_align_to(up_speed_unit_label, up_speed_label, LV_ALIGN_OUT_RIGHT_BOTTOM, 3, 0);
+    lv_obj_align(up_speed_unit_label, LV_ALIGN_TOP_MID, -16, 0);
 
-    down_label = lv_label_create(cont);
-    lv_obj_set_style_text_color(down_label, lv_palette_main(LV_PALETTE_GREEN), LV_STATE_DEFAULT);
-    lv_label_set_text(down_label, LV_SYMBOL_DOWNLOAD);
-    // lv_obj_align(down_label, LV_ALIGN_TOP_MID, 5, 0);
-    lv_obj_align_to(down_label, up_speed_unit_label, LV_ALIGN_OUT_RIGHT_MID, 3, -4);
-
-    down_speed_label = lv_label_create(cont);
-    lv_label_set_text(down_speed_label, "0");
-    lv_obj_set_style_text_color(down_speed_label, lv_color_white(), LV_STATE_DEFAULT);
-    lv_obj_add_style(down_speed_label, &font_22, 0);
-    // lv_obj_align_to(down_speed_label, down_speed_unit_label, LV_ALIGN_OUT_LEFT_MID, -3, 0);
-    lv_obj_align_to(down_speed_label, down_label, LV_ALIGN_OUT_RIGHT_MID, 3, 0);
+    // Upload & Download Speed Display
+    up_speed_label = lv_label_create(cont);
+    lv_label_set_text(up_speed_label, "0");
+    lv_obj_set_style_text_color(up_speed_label, lv_color_white(), LV_STATE_DEFAULT);
+    lv_obj_add_style(up_speed_label, &font_22, 0);
+    lv_obj_align_to(up_speed_label, up_speed_unit_label, LV_ALIGN_OUT_LEFT_BOTTOM, -3, 0);
+ 
 
     down_speed_unit_label = lv_label_create(cont);
     lv_label_set_text(down_speed_unit_label, "M/S");
     lv_obj_set_style_text_color(down_speed_unit_label, lv_color_hex(0x838a99), LV_STATE_DEFAULT);
     // lv_obj_add_style(down_speed_unit_label, &font_22, 0);
     // lv_obj_align(down_speed_unit_label, LV_ALIGN_TOP_RIGHT, 10, 0);
-    lv_obj_align_to(down_speed_unit_label, down_speed_label, LV_ALIGN_OUT_RIGHT_BOTTOM, 3, 0);
+    lv_obj_align(down_speed_unit_label, LV_ALIGN_TOP_RIGHT, 3, 0);
+
+    down_speed_label = lv_label_create(cont);
+    lv_label_set_text(down_speed_label, "0");
+    lv_obj_set_style_text_color(down_speed_label, lv_color_white(), LV_STATE_DEFAULT);
+    lv_obj_add_style(down_speed_label, &font_22, 0);
+    // lv_obj_align_to(down_speed_label, down_speed_unit_label, LV_ALIGN_OUT_LEFT_MID, -3, 0);
+    lv_obj_align_to(down_speed_label, down_speed_unit_label, LV_ALIGN_OUT_LEFT_BOTTOM, 6, 0);
 
     // 绘制曲线图
     /*Create a chart*/
@@ -291,7 +291,7 @@ void display_routor()
     lv_obj_align(chart, LV_ALIGN_BOTTOM_MID, 0, 2);
     lv_chart_set_type(chart, LV_CHART_TYPE_LINE); /*Show lines and points too*/
     lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, 0, 4096);
-    lv_chart_set_point_count(chart, 10); // 设置显示点数
+    lv_chart_set_point_count(chart, 20); // 设置显示点数
     lv_chart_set_update_mode(chart, LV_CHART_UPDATE_MODE_SHIFT);
 
     /*Add a faded are effect*/

@@ -75,9 +75,9 @@ void setup()
     // 初始化运行时参数
     systemInfo = (System_information *)calloc(1, sizeof(System_information));
     systemInfo->TFFreeSpace = "无TF卡";
-    strcpy(systemInfo->FrameVersion, AIO_VERSION);
-    strcpy(systemInfo->HeadwareVersion, HEADWARE_VERSION);
-    Serial.println(F("\nAIO (All in one) version " AIO_VERSION "\n"));
+    strcpy(systemInfo->FrameVersion, SOFTWARE_VERSION);
+    strcpy(systemInfo->HeadwareVersion, HARDWARE_VERSION);
+    Serial.println(F("\nAIO (All in one) version " SOFTWARE_VERSION "\n"));
     Serial.flush();
     // MAC ID可用作芯片唯一标识
     Serial.print(F("ChipID(EfuseMac): "));
