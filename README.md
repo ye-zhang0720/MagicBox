@@ -6,7 +6,7 @@
 
 * 原作者的项目链接 https://github.com/ClimbSnail/HoloCubic_AIO
 * 或者 https://gitee.com/ClimbSnailQ/HoloCubic_AIO
-* 本项目连接 https://github.com/ClimbSnail/HoloCubic_AIO
+* 本项目连接 https://github.com/ye-zhang0720/MagicBox
 
 ### 主要特点
 1. 聚合多种APP，内置天气、时钟、相册、特效动画、视频播放、电脑投屏、web设置、软路由监控等等。（各APP具体使用参考说明书）
