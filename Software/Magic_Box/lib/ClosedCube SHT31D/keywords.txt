@@ -1,0 +1,40 @@
+##################################################################
+# Syntax Coloring Map For ClosedCube SHT31-D [Digital] Humidity and Temperature Sensor Breakout  Library
+# Support SHT30-D, SHT31-D and SHT35-D sensors
+##################################################################
+
+##################################################################
+# Datatypes (KEYWORD1)
+##################################################################
+
+ClosedCube_SHT31D	KEYWORD1
+
+##################################################################
+# Methods and Functions (KEYWORD2)
+##################################################################
+
+begin	KEYWORD2
+clearAll	KEYWORD2
+readStatusRegister	KEYWORD2
+	
+heaterEnable		KEYWORD2
+heaterDisable	KEYWORD2
+artEnable			KEYWORD2
+
+readSerialNumber		KEYWORD2
+	
+readTempAndHumidity		KEYWORD2
+readTempAndHumidityClockStretch	KEYWORD2
+readTempAndHumidityPolling	KEYWORD2
+
+periodicStart			KEYWORD2
+periodicFetchData	KEYWORD2
+periodicStop			KEYWORD2
+
+writeAlertHigh			KEYWORD2
+readAlertHighSet		KEYWORD2
+readAlertHighClear		KEYWORD2
+
+writeAlertLow			KEYWORD2
+readAlertLowSet		KEYWORD2
+readAlertLowClear		KEYWORD2
