@@ -124,6 +124,9 @@
 1. 运行条件: 必须是已经正常配置wifi。路由器必须安装NetData
 2. 第一次使用之前，要先在`设置 App`的网页上填写配置路由器ip地址，端口号一般默认就可以。
 3. 如果信息显示不正常，可修改更具实际情况修改Chart ID
+
+注：移植了'shelo'大佬的界面
+
 ##FAQ
 1. 烧录后温度信息不显示
 参考资料： https://hiwbb.com/2021/10/openwrt-netdata-show-temperature/
