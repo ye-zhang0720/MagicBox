@@ -4,9 +4,10 @@
 #include "lvgl.h"
 
 #define SCALE_SIZE 4
-
+LV_FONT_DECLARE(weiruanyahei_27);
 lv_obj_t *game_2048_gui = NULL;
 lv_obj_t *img[SCALE_SIZE * SCALE_SIZE];
+lv_obj_t* mbox;
 
 static lv_style_t default_style;
 
@@ -31,6 +32,18 @@ void game_2048_gui_init(void)
         lv_obj_align(img[i], LV_ALIGN_TOP_LEFT, 8 + i % 4 * 58, 8 + i / 4 * 58);
     }
     lv_scr_load(game_2048_gui);
+}
+
+void close_result_messageBox()
+{
+    lv_msgbox_close(mbox);
+}
+
+void show_result_messageBox(char *result)
+{
+    mbox = lv_msgbox_create(game_2048_gui, NULL, result, NULL, false);
+    lv_obj_set_style_text_font(mbox, &weiruanyahei_27, 0);
+    lv_obj_center(mbox);
 }
 
 /*

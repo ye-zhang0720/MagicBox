@@ -39,6 +39,7 @@ struct Game2048AppRunData
     int BornLocation = 0; // 记录新棋子的位置
     int *pBoard;
     int *moveRecord;
+    bool game_status; // 0进行中 1完成
     BaseType_t xReturned_task_one = pdFALSE;
     TaskHandle_t xHandle_task_one = NULL;
     BaseType_t xReturned_task_two = pdFALSE;
@@ -49,6 +50,8 @@ static Game2048AppRunData *run_data = NULL;
 
 static int game_2048_init(AppController *sys)
 {
+    setCpuFrequencyMhz(240);
+    vTaskDelay(200 / portTICK_PERIOD_MS);
     // 初始化运行时的参数
     game_2048_gui_init();
 
@@ -58,6 +61,7 @@ static int game_2048_init(AppController *sys)
     game.init();
     run_data->pBoard = game.getBoard();
     run_data->moveRecord = game.getMoveRecord();
+    run_data->game_status = false;
 
     // run_data->xReturned_task_one = xTaskCreate(
     //     taskOne,                      /*任务函数*/
@@ -83,7 +87,9 @@ static int game_2048_init(AppController *sys)
     AIO_LVGL_OPERATE_LOCK(born(new1);)
     AIO_LVGL_OPERATE_LOCK(born(new2);)
     // 防止进入游戏时，误触发了向上
+    AIO_LVGL_OPERATE_LOCK(show_result_messageBox("游戏开始!"););
     vTaskDelay(1000 / portTICK_PERIOD_MS);
+    AIO_LVGL_OPERATE_LOCK(close_result_messageBox());
     return 0;
 }
 
@@ -103,7 +109,7 @@ static void game_2048_process(AppController *sys,
         if (game.comparePre() == 0)
         {
             AIO_LVGL_OPERATE_LOCK(showAnim(run_data->moveRecord, 4);)
-            delay(700);
+            vTaskDelay(700);
             AIO_LVGL_OPERATE_LOCK(showNewBorn(game.addRandom(), run_data->pBoard);)
         }
     }
@@ -119,6 +125,27 @@ static void game_2048_process(AppController *sys,
     }
     else if (UP == act_info->active)
     {
+        if (run_data->game_status == true)
+        {
+            AIO_LVGL_OPERATE_LOCK(close_result_messageBox());
+            randomSeed(analogRead(25));
+            game.init();
+            run_data->pBoard = game.getBoard();
+            run_data->moveRecord = game.getMoveRecord();
+            run_data->game_status = false;
+            // 刷新棋盘显示
+            int new1 = game.addRandom();
+            int new2 = game.addRandom();
+            AIO_LVGL_OPERATE_LOCK(showBoard(run_data->pBoard);)
+            // 棋子出生动画
+            AIO_LVGL_OPERATE_LOCK(born(new1);)
+            AIO_LVGL_OPERATE_LOCK(born(new2);)
+            // 防止进入游戏时，误触发了向上
+            AIO_LVGL_OPERATE_LOCK(show_result_messageBox("游戏开始!"););
+            delay(1000 / portTICK_PERIOD_MS);
+            AIO_LVGL_OPERATE_LOCK(close_result_messageBox());
+        }
+
         game.moveUp();
         if (game.comparePre() == 0)
         {
@@ -141,12 +168,22 @@ static void game_2048_process(AppController *sys,
     if (game.judge() == 1)
     {
         //   rgb.setRGB(0, 255, 0);
-        Serial.println("you win!");
+        if (run_data->game_status == false)
+        {
+            AIO_LVGL_OPERATE_LOCK(show_result_messageBox("你赢了!"););
+        }
+        run_data->game_status = true;
     }
     else if (game.judge() == 2)
     {
         //   rgb.setRGB(255, 0, 0);
-        Serial.println("you lose!");
+        if (run_data->game_status == false)
+        {
+            Serial.println("you lose!");
+            AIO_LVGL_OPERATE_LOCK(show_result_messageBox("你输了!"););
+        }
+
+        run_data->game_status = true;
     }
 
     // 程序需要时可以适当加延时
@@ -182,6 +219,7 @@ static int game_2048_exit_callback(void *param)
         free(run_data);
         run_data = NULL;
     }
+    setCpuFrequencyMhz(160);
     return 0;
 }
 

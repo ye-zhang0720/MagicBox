@@ -36,6 +36,7 @@ void setBackLight_fade(float duty)
 
 void auto_set_backLight()
 {
+    
     if (app_controller->sys_cfg.auto_backLight)
     {
         if (lux < 5) // 暗光环境极低亮度显示
@@ -83,12 +84,14 @@ void auto_set_backLight()
 
 void get_BH1750_data()
 {
+    // Serial.println("Light get sensor");
     if (lightMeter.measurementReady(true))
     {
         lux = lightMeter.readLightLevel();
+        
         if (lux < 0)
         {
-            // Serial.println(F("Error condition detected"));
+            Serial.println(F("Error condition detected"));
         }
         else
         {
@@ -140,5 +143,8 @@ void get_BH1750_data()
                 }
             }
         }
+        
     }
+        // Serial.print("Light: ");
+        // Serial.println(lux);
 }

@@ -5,6 +5,6 @@
 
 extern APP_OBJ weather_app;
 
-
+void update_sensor_data_callback(void *p);
 
 #endif

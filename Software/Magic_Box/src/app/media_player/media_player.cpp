@@ -287,7 +287,7 @@ static int media_player_exit_callback(void *param)
         free(run_data);
         run_data = NULL;
     }
-
+    setCpuFrequencyMhz(160);
     return 0;
 }
 

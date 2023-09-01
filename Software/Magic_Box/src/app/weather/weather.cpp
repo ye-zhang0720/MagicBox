@@ -43,6 +43,7 @@ struct WeatherAppRunData
 
     BaseType_t xReturned_task_task_update; // 更新数据的异步任务
     TaskHandle_t xHandle_task_task_update; // 更新数据的异步任务
+    TimerHandle_t sensor_update_timer;     // 传感器更新定时器
     Weather wea;                           // 保存天气状况
 };
 
@@ -259,6 +260,20 @@ static void UpdateTime_RTC(long long timestamp)
     AIO_LVGL_OPERATE_LOCK(display_time(t, LV_SCR_LOAD_ANIM_NONE););
 }
 
+void update_sensor_data_callback(void *p)
+{
+    if (run_data->clock_page == 0)
+    {
+        run_data->wea.indoor_temperature = getTemperatire();
+        run_data->wea.indoor_huimdity = getHumidity() + 0.5;
+        AIO_LVGL_OPERATE_LOCK(update_indoor_temp_humi(run_data->wea.indoor_temperature, run_data->wea.indoor_huimdity););
+        // Serial.print(run_data->wea.indoor_temperature);
+        // Serial.print(" H: ");
+        // Serial.print(run_data->wea.indoor_huimdity);
+        // Serial.println("");
+    }
+}
+
 static int weather_init(AppController *sys)
 {
     tft->setSwapBytes(true);
@@ -297,7 +312,8 @@ static int weather_init(AppController *sys)
         NULL,                                 /*作为任务输入传递的参数*/
         2,                                    /*任务的优先级*/
         &run_data->xHandle_task_task_update); /*任务句柄*/
-
+    run_data->sensor_update_timer = xTimerCreate("sensor_update", 2000 / portTICK_PERIOD_MS, pdTRUE, NULL, update_sensor_data_callback);
+    xTimerStart(run_data->sensor_update_timer, 0);
     return 0;
 }
 
@@ -370,7 +386,7 @@ static int weather_exit_callback(void *param)
     weather_gui_del();
 
     // vTaskDelete(run_data->xHandle_task_task_update);
-
+    xTimerDelete(run_data->sensor_update_timer, 0);
     // 释放运行数据
     if (NULL != run_data)
     {
@@ -382,20 +398,15 @@ static int weather_exit_callback(void *param)
 static void task_update(void *parameter)
 {
     long count = 0;
-    
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
     while (1)
     {
         // Serial.println("update temp humi");
         // update_indoor_temp_humi(15, 55, LV_SCR_LOAD_ANIM_NONE);
-        if ((run_data->clock_page == 0) && (count % 60 == 0))
+        if ((count % (3600 * cfg_data.weatherUpdataInterval) == 0) || (run_data->coactusUpdateFlag == 0x01)) // 每1小时执行
         {
-            run_data->wea.indoor_temperature = getTemperatire();
-            run_data->wea.indoor_huimdity = getHumidity() + 0.5;
-            AIO_LVGL_OPERATE_LOCK(update_indoor_temp_humi(run_data->wea.indoor_temperature, run_data->wea.indoor_huimdity););
-        }
-
-        if ((count % (60 * 60 * cfg_data.weatherUpdataInterval) == 0) || (run_data->coactusUpdateFlag == 0x01)) // 每1小时执行
-        {
+            setCpuFrequencyMhz(240);
+            vTaskDelay(500 / portTICK_PERIOD_MS);
             Serial.printf("updating weather data\n");
             run_data->coactusUpdateFlag = 0x0;
             if ((run_data->wea.update_weather_flag == 1) && (run_data->wea.update_3day_weather_flag == 1))
@@ -446,6 +457,7 @@ static void task_update(void *parameter)
                 run_data->coactusUpdateFlag = 0x01;
                 vTaskDelay(60000 / portTICK_PERIOD_MS);
             }
+            setCpuFrequencyMhz(160);
         }
         count++;
         vTaskDelay(1000 / portTICK_PERIOD_MS);

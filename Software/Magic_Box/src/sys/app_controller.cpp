@@ -52,7 +52,7 @@ void AppController::init(void)
     }
     else
     {
-        setCpuFrequencyMhz(80);
+        setCpuFrequencyMhz(160);
     }
     // uint32_t freq = getXtalFrequencyMhz(); // In MHz
     Serial.print(F("CpuFrequencyMhz: "));
@@ -450,7 +450,7 @@ void AppController::app_exit()
     }
     else
     {
-        setCpuFrequencyMhz(80);
+        setCpuFrequencyMhz(160);
     }
     Serial.print(F("CpuFrequencyMhz: "));
     Serial.println(getCpuFrequencyMhz());

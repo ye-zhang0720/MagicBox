@@ -60,7 +60,6 @@ void sensor_task_entry(void *p)
 {
     while (1)
     {
-
         sht3xGetData(); // we use here the maxWait option due fail save
         get_BH1750_data();
         auto_set_backLight();
@@ -77,11 +76,15 @@ void setup()
     systemInfo->TFFreeSpace = "无TF卡";
     strcpy(systemInfo->FrameVersion, SOFTWARE_VERSION);
     strcpy(systemInfo->HeadwareVersion, HARDWARE_VERSION);
-    Serial.println(F("\nAIO (All in one) version " SOFTWARE_VERSION "\n"));
+    Serial.println(F("\nMagic Box version " SOFTWARE_VERSION "\n"));
     Serial.flush();
     // MAC ID可用作芯片唯一标识
     Serial.print(F("ChipID(EfuseMac): "));
     Serial.println(ESP.getEfuseMac());
+
+    // 获取 Flash 大小（以字节为单位）
+    systemInfo->flash_size = ESP.getFlashChipSize() / 1048576;
+    Serial.printf("Flash Size: %dM\n", systemInfo->flash_size);
 
     app_controller = new AppController(); // APP控制器
 
@@ -246,7 +249,7 @@ void setup()
     act_info = mpu.getAction();
     // 定义一个mpu6050的动作检测定时器
     xTimerAction = xTimerCreate("Action Check",
-                                200 / portTICK_PERIOD_MS,
+                                300 / portTICK_PERIOD_MS,
                                 pdTRUE, (void *)0, actionCheckHandle);
     xTimerStart(xTimerAction, 0);
 

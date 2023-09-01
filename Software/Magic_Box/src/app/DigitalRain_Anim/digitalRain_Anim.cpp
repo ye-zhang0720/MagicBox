@@ -14,12 +14,14 @@ DigitalRainAnimation<TFT_eSPI> *matrix_effect;
 
 static int DigitalRain_init(AppController *sys)
 {
+    setCpuFrequencyMhz(240);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
     matrix_effect = new DigitalRainAnimation<TFT_eSPI>();
     matrix_effect->init(tft);
     matrix_effect->setup(
         10 /* Line Min */,
         30, /* Line Max */
-        18,  /* Speed Min */
+        10, /* Speed Min */
         25, /* Speed Max */
         60 /* Screen Update Interval */);
     return 0;
@@ -82,7 +84,7 @@ static int DigitalRain_exit_callback(void *param)
         delete matrix_effect;
         matrix_effect = NULL;
     }
-    // setCpuFrequencyMhz(160);
+    setCpuFrequencyMhz(160);
     return 0;
 }
 

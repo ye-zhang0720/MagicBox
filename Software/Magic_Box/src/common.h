@@ -43,6 +43,7 @@ struct System_information
     char FrameVersion[10];
     char HeadwareVersion[10];
     char *TFFreeSpace;
+    uint8_t flash_size;
 };
 extern System_information *systemInfo;
 

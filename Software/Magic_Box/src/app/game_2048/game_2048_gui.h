@@ -21,6 +21,8 @@ extern "C"
 	void showAnim(int* animMap, int direction);
     void showNewBorn(int newborn, int *map);
 	void born(int i);
+    void show_result_messageBox(char *result);
+    void close_result_messageBox();
 
 #ifdef __cplusplus
 } /* extern "C" */

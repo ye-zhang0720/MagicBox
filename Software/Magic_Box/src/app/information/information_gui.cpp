@@ -33,24 +33,30 @@ void information_gui_init(struct System_information *data)
     lv_label_set_text(name_lab, "本机名称");
 
     lv_obj_t *frame_lab = lv_label_create(main_scr);
-    lv_obj_align(frame_lab, LV_ALIGN_TOP_LEFT, 5, 50);
+    lv_obj_align(frame_lab, LV_ALIGN_TOP_LEFT, 5, 43);
     lv_obj_add_style(frame_lab, &label_style, LV_PART_MAIN);
     lv_label_set_text(frame_lab, "固件版本");
 
     lv_obj_t *head_lab = lv_label_create(main_scr);
-    lv_obj_align(head_lab, LV_ALIGN_TOP_LEFT, 5, 90);
+    lv_obj_align(head_lab, LV_ALIGN_TOP_LEFT, 5, 78);
     lv_obj_add_style(head_lab, &label_style, LV_PART_MAIN);
     lv_label_set_text(head_lab, "硬件版本");
 
     lv_obj_t *developer_lab = lv_label_create(main_scr);
-    lv_obj_align(developer_lab, LV_ALIGN_TOP_LEFT, 5, 130);
+    lv_obj_align(developer_lab, LV_ALIGN_TOP_LEFT, 5, 113);
     lv_obj_add_style(developer_lab, &label_style, LV_PART_MAIN);
     lv_label_set_text(developer_lab, "开 发 者");
 
     lv_obj_t *tf_lab = lv_label_create(main_scr);
-    lv_obj_align(tf_lab, LV_ALIGN_TOP_LEFT, 5, 170);
+    lv_obj_align(tf_lab, LV_ALIGN_TOP_LEFT, 5, 148);
     lv_obj_add_style(tf_lab, &label_style, LV_PART_MAIN);
-    lv_label_set_text(tf_lab, "存储空间");
+    lv_label_set_text(tf_lab, "TF存储空间");
+    
+    lv_obj_t *flash_size_lab2 = lv_label_create(main_scr);
+    lv_obj_align(flash_size_lab2, LV_ALIGN_TOP_LEFT, 5, 183);
+    lv_obj_add_style(flash_size_lab2, &label_style, LV_PART_MAIN);
+    lv_label_set_text(flash_size_lab2, "Flash");
+
 
     lv_obj_t *name_lab2 = lv_label_create(main_scr);
     lv_obj_align(name_lab2, LV_ALIGN_TOP_MID, 60, 10);
@@ -58,24 +64,33 @@ void information_gui_init(struct System_information *data)
     lv_label_set_text(name_lab2, "Magic Box");
 
     lv_obj_t *frame_lab2 = lv_label_create(main_scr);
-    lv_obj_align(frame_lab2, LV_ALIGN_TOP_MID, 60, 50);
+    lv_obj_align(frame_lab2, LV_ALIGN_TOP_MID, 60, 43);
     lv_obj_add_style(frame_lab2, &label_style, LV_PART_MAIN);
     lv_label_set_text(frame_lab2, data->FrameVersion);
 
     lv_obj_t *head_lab2 = lv_label_create(main_scr);
-    lv_obj_align(head_lab2, LV_ALIGN_TOP_MID, 60, 90);
+    lv_obj_align(head_lab2, LV_ALIGN_TOP_MID, 60, 78);
     lv_obj_add_style(head_lab2, &label_style, LV_PART_MAIN);
     lv_label_set_text(head_lab2, data->HeadwareVersion);
 
     lv_obj_t *developer_lab2 = lv_label_create(main_scr);
-    lv_obj_align(developer_lab2, LV_ALIGN_TOP_MID, 60, 130);
+    lv_obj_align(developer_lab2, LV_ALIGN_TOP_MID, 60, 113);
     lv_obj_add_style(developer_lab2, &label_style, LV_PART_MAIN);
     lv_label_set_text(developer_lab2, "西北偏北");
 
     lv_obj_t *tf_lab2 = lv_label_create(main_scr);
-    lv_obj_align(tf_lab2, LV_ALIGN_TOP_MID, 60, 170);
+    lv_obj_align(tf_lab2, LV_ALIGN_TOP_MID, 60, 148);
     lv_obj_add_style(tf_lab2, &label_style, LV_PART_MAIN);
     lv_label_set_text(tf_lab2, data->TFFreeSpace);
+
+
+
+    lv_obj_t *flash_lab2 = lv_label_create(main_scr);
+    lv_obj_align(flash_lab2, LV_ALIGN_TOP_MID, 60, 183);
+    lv_obj_add_style(flash_lab2, &label_style, LV_PART_MAIN);
+    char flashSizebuf[10];
+    itoa(data->flash_size, flashSizebuf, 10);
+    lv_label_set_text(flash_lab2, strcat(flashSizebuf, "M"));
 
     lv_obj_t *bottom_label = lv_label_create(main_scr);
     lv_obj_align(bottom_label, LV_ALIGN_BOTTOM_MID, 0, -8);
