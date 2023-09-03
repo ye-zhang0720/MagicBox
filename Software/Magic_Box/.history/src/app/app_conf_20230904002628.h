@@ -54,7 +54,7 @@
 #endif
 
 // 视频播放器APP
-#define APP_MEDIA_PLAYER_USE 0
+#define APP_MEDIA_PLAYER_USE 1
 #if APP_MEDIA_PLAYER_USE
 #include "app/media_player/media_player.h"
 #endif
@@ -77,6 +77,12 @@
 #include "app/screen_share/screen_share.h"
 #endif
 
+// 网页配置服务APP
+// 此项用于配置小电视，为必选项，此处仅为了说明有这个app，此宏无作用
+// #define APP_WEB_SERVER_USE 1
+// #if APP_WEB_SERVER_USE
+// #include "app/server/server.h"
+// #endif
 
 // 设置APP
 #define APP_SETTING_USE 1
@@ -101,6 +107,13 @@
 #define APP_DigitalRain_USE 1
 #if APP_WEATHER_USE
 #include "app/DigitalRain_Anim/digitalRain_Anim.h"
+#endif
+
+// 天气(旧)APP
+// 如flash空间不够，首选配置天气app二选一，腾出大量flash空间
+#define APP_WEATHER_OLD_USE 0
+#if APP_WEATHER_OLD_USE
+#include "app/weather_old/weather_old.h"
 #endif
 
 // information

@@ -8,20 +8,9 @@
 #define TFT_MISO -1
 #define TFT_MOSI 23
 #define TFT_SCLK 18
-#define TFT_CS 5 // Not connected
-#define TFT_DC 27
-#define TFT_RST 26 // Connect reset to ensure display initialises
-
-
-
-// // Generic ESP32 setup
-// #define TFT_MISO -1
-// #define TFT_MOSI 23
-// #define TFT_SCLK 18
-// #define TFT_CS    5 // Not connected
-// #define TFT_DC   27
-// #define TFT_RST  26  // Connect reset to ensure display initialises
-
+#define TFT_CS -1 // Not connected
+#define TFT_DC 2
+#define TFT_RST 4 // Connect reset to ensure display initialises
 
 RgbPlayDocoder::RgbPlayDocoder(File *file, bool isUseDMA)
 {

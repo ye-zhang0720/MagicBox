@@ -153,6 +153,9 @@ void setup()
 #if APP_WEATHER_USE
     app_controller->app_install(&weather_app);
 #endif
+#if APP_WEATHER_OLD_USE
+    app_controller->app_install(&weather_old_app);
+#endif
 #if APP_DigitalRain_USE
     app_controller->app_install(&DigitalRain_app);
 #endif
@@ -177,6 +180,9 @@ void setup()
 #if APP_BILIBILI_FANS_USE
     app_controller->app_install(&bilibili_app);
 #endif
+#if APP_SETTING_USE
+    app_controller->app_install(&settings_app);
+#endif
 #if APP_GAME_2048_USE
     app_controller->app_install(&game_2048_app);
 #endif
@@ -194,9 +200,6 @@ void setup()
 #endif
 #if APP_ROUTER_MONITOR_USE
     app_controller->app_install(&router_app);
-#endif
-#if APP_SETTING_USE
-    app_controller->app_install(&settings_app);
 #endif
 #if APP_INFORMATION_USE
     app_controller->app_install(&information_app);
