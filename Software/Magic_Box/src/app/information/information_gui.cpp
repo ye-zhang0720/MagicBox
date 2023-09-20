@@ -95,7 +95,7 @@ void information_gui_init(struct System_information *data)
     lv_obj_t *bottom_label = lv_label_create(main_scr);
     lv_obj_align(bottom_label, LV_ALIGN_BOTTOM_MID, 0, -8);
     lv_obj_add_style(bottom_label, &label_style, LV_PART_MAIN);
-    lv_label_set_text(bottom_label, "To 小陈同学");
+    lv_label_set_text(bottom_label, "@西北偏北");
 
     lv_scr_load_anim(main_scr, LV_SCR_LOAD_ANIM_FADE_IN, 300, 300, false);
     // lv_scr_load(main_scr);
