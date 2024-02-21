@@ -11,9 +11,9 @@
 #include "sys/sys_Time.h"
 
 #define WEATHER_APP_NAME "天气时钟"
-#define WEATHER_NOW_API "https://www.yiketianqi.com/free/day?appid=%s&appsecret=%s&unescape=1&city=%s"
+#define WEATHER_NOW_API "http://v1.yiketianqi.com/free/day?appid=%s&appsecret=%s&unescape=1&city=%s"
 #define WEATHER_NOW_API_UPDATE "https://yiketianqi.com/api?unescape=1&version=v6&appid=%s&appsecret=%s&city=%s"
-#define WEATHER_DALIY_API "https://www.yiketianqi.com/free/week?unescape=1&appid=%s&appsecret=%s&city=%s"
+#define WEATHER_DALIY_API "http://v1.yiketianqi.com/free/week?unescape=1&appid=%s&appsecret=%s&city=%s"
 #define WEATHER_PAGE_SIZE 2
 #define UPDATE_WEATHER 0x01       // 更新天气
 

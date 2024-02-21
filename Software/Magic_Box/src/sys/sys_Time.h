@@ -6,7 +6,7 @@
 #include <WiFi.h>
 #include <esp_wifi.h> //用于esp_wifi_restore() 删除保存的wifi信息
 
-#define NTP1 "ntp1.aliyun.com"
+#define NTP1 "ntp.aliyun.com"
 #define NTP2 "ntp2.aliyun.com"
 #define NTP3 "ntp.tencent.com"
 #define NTP4 "pool.ntp.org"

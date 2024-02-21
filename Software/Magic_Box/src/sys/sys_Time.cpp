@@ -41,7 +41,10 @@ void sys_rtc_update_task_Entry(void *p)
             {
 
                 timeClient.begin();
-                timeClient.update();
+                if(!timeClient.update())
+                {
+                    Serial.println("[EVENT] ERROR: updating time failed from NTP Server!!!");
+                }
                 if (timeClient.isTimeSet())
                 {
                     // Get a time structure
